@@ -3,9 +3,74 @@
 
 using namespace ELFIO;
 
+void print_symbols(elfio* reader, section* symtab_sec) {
+  const symbol_section_accessor symbols(*reader, symtab_sec);
+  for (unsigned int i = 0; i < symbols.get_symbols_num(); i++) {
+    std::string name;
+    Elf64_Addr value;
+    Elf_Xword size;
+    unsigned char bind;
+    unsigned char type;
+    Elf_Half section_index;
+    unsigned char other;
+    symbols.get_symbol(i, name, value, size, bind, type, section_index, other);
+    std::cout << i << " " << name << std::endl;
+  }
+}
+
+void print_symtabs(elfio* reader) {
+  for (auto sec : reader->sections) {
+    if (sec->get_type() == SHT_SYMTAB) {
+      std::cout << "symbols" << std::endl;
+      print_symbols(reader, sec);
+    }
+  }
+}
+
 int main(int argc, char** argv) {
   if (argc != 2) {
     std::cout << "Usage: tutorial <elf_file>" << std::endl;
   }
+
+  elfio reader;
+  if (!reader.load(argv[1])) {
+    std::cout << "Can't find or process the ELF file " << argv[1] << std::endl;
+  }
+
+  std::cout << "ELF file class: ";
+  if (reader.get_class() == ELFCLASS32) {
+    std::cout << "ELF32" << std::endl;
+  } else {
+    std::cout << "ELF64" << std::endl;
+  }
+
+  std::cout << "File encoding: ";
+  if (reader.get_encoding() == ELFDATA2LSB) {
+    std::cout << "Little endian" << std::endl;
+  } else {
+    std::cout << "Big endian" << std::endl;
+  }
+
+  Elf_Half sec_num = reader.sections.size();
+  std::cout << "Number of sections: " << sec_num << std::endl;
+  for (int i = 0; i < sec_num; i++) {
+    const section* psec = reader.sections[i];
+    std::cout << " [" << i << "] "
+	      << psec->get_name()
+	      << "\t"
+	      << psec->get_size()
+	      << std::endl;
+  }
+
+  Elf_Half seg_num = reader.segments.size();
+  std::cout << "Number of segments: " << seg_num << std::endl;
+  for (int i = 0; i < seg_num; i++) {
+    const segment* pseg = reader.segments[i];
+    std::cout << " [" << i << "] "
+	      << pseg->get_flags()
+	      << "\t0x" << std::endl;
+  }
+
+  print_symtabs(&reader);
   return 0;
 }
