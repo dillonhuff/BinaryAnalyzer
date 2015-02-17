@@ -56,9 +56,9 @@ char word16::least_sig_byte() {
 std::string word16::to_hex_string() {
   assert(bytes.size() == 2);
   if (endian == LITTLE) {
-    return hex_to_string(2, '0', bytes[1]) + hex_to_string(2, '0', bytes[0]);
+    return hex_char_to_string(2, '0', bytes[1]) + hex_char_to_string(2, '0', bytes[0]);
   } else {
-    return hex_to_string(2, '0', bytes[0]) + hex_to_string(2, '0', bytes[1]);
+    return hex_char_to_string(2, '0', bytes[0]) + hex_char_to_string(2, '0', bytes[1]);
   }
 }
 
