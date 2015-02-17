@@ -1,6 +1,7 @@
 #ifndef ARM_INSTRUCTION_H_
 #define ARM_INSTRUCTION_H_
 
+#include <string>
 #include <vector>
 
 #include "utils/word16.h"
