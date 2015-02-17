@@ -9,7 +9,7 @@
 
 class arm_disassembler {
  public:
-  static std::unique_ptr<arm_instruction_sequence> disassemble32(Endianness end, const char* bytes);
+  static std::unique_ptr<arm_instruction_sequence> disassemble32(endianness end, const char* bytes);
 };
 
 #endif
