@@ -1,7 +1,8 @@
-#include <memory>
-
 #ifndef ARM_DISASSEMBLER_H_
 #define ARM_DISASSEMBLER_H_
+
+#include <memory>
+#include <vector>
 
 #include "arm/arm_instruction_sequence.h"
 #include "utils/endianness.h"
