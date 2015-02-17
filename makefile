@@ -1,6 +1,17 @@
-CC         := g++
-LINKER     := $(CC)
-CFLAGS	   := -O3 -g -Wall -std=c++11 -Isrc/
+UNAME := $(shell uname)
+DEP_CFLAGS := -O3 -g -Wall -Isrc/
+CFLAGS := $(DEP_CFLAGS)
+CFLAGS += -std=c++11
+
+ifeq ($(UNAME), Linux)
+CC := g++-4.9
+endif
+
+ifeq ($(UNAME), Darwin)
+CC := clang
+endif
+
+LINKER := $(CC)
 
 SOURCES :=  $(shell find src -type f -name '*.cpp')
 OBJS := $(patsubst %.cpp, %.o, $(SOURCES))
@@ -11,7 +22,7 @@ binary_analyzer: $(notdir $(OBJS))
 include $(OBJS:.o=.d)
 
 %.d: %.cpp
-	bash depends.sh $(CFLAGS) src/ $*.cpp > $@
+	bash depends.sh $(DEP_CFLAGS) src/ $*.cpp > $@
 
 clean:
 	find . -type f -name '*~' -delete
