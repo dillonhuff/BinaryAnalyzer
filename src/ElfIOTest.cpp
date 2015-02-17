@@ -67,7 +67,7 @@ void disassemble_code(char* elf_file_name) {
     return;
   }
 
-  auto instructions = arm_disassembler::disassemble32(LITTLE, text_section->get_data());
+  auto instructions = arm_disassembler::disassemble32(LITTLE, text_section->get_data(), (unsigned int) text_section->get_size());
 
   std::cout << instructions->to_string() << std::endl;
 }

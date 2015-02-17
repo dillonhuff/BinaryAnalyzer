@@ -16,5 +16,5 @@ class word32 {
   std::vector<bit> get_bits(unsigned int top, unsigned int bottom);
 };
 
-std::vector<std::unique_ptr<word32>> convert_to_word32(endianness end, const char* bytes);
+std::vector<std::unique_ptr<word32>> convert_to_word32(endianness end, const char* bytes, unsigned int n);
 #endif
