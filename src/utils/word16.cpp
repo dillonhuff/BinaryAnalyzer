@@ -2,6 +2,7 @@
 #include <iostream>
 
 #include "utils/endianness.h"
+#include "utils/hex_print.h"
 #include "utils/word16.h"
 
 word16::word16(endianness end, const char* b) {
@@ -24,8 +25,8 @@ bit word16::get_bit(unsigned int index) {
 
 std::vector<bit> word16::get_bits(unsigned int top, unsigned int bottom) {
   assert(top >= bottom);
-  assert(31 >= top && top >= 0);
-  assert(31 >= bottom && bottom >= 0);
+  assert(15 >= top && top >= 0);
+  assert(15 >= bottom && bottom >= 0);
 
   std::vector<bit> bits;
   unsigned int i = top;
@@ -40,6 +41,8 @@ std::string word16::to_hex_string() {
   assert(bytes.size() == 2);
   if (endian == LITTLE) {
     return hex_to_string(2, '0', bytes[1]) + hex_to_string(2, '0', bytes[0]);
+  } else {
+    return hex_to_string(2, '0', bytes[0]) + hex_to_string(2, '0', bytes[1]);
   }
 }
 

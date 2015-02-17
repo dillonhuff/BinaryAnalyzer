@@ -71,17 +71,17 @@ void disassemble_code(char* elf_file_name) {
   }
 
   // Print out the text section data
-  for (int i = 0; i < text_section->get_size(); i++) {
+  /*  for (int i = 0; i < text_section->get_size(); i++) {
     std::cout << hex_to_string(2, '0', text_section->get_data()[i]);
     std::cout << " ";
     if (i % 8 == 7) {
       std::cout << std::endl;
     }
-  }
+    }*/
 
-  /*  std::cout << "text_section size: " << std::to_string(text_section->get_size()) << std::endl;
+  std::cout << "text_section size: " << std::to_string(text_section->get_size()) << std::endl;
   auto instructions = arm_disassembler::disassemble32(LITTLE, text_section->get_data(), (unsigned int) text_section->get_size());
-  std::cout << instructions->raw_bits_to_string() << std::endl;*/
+  std::cout << instructions->raw_bits_to_string() << std::endl;
 }
 
 void read_elf(char* elf_file_name) {

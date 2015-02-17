@@ -3,7 +3,7 @@
 
 #include <vector>
 
-#include "utils/word32.h"
+#include "utils/word16.h"
 #include "utils/bit.h"
 
 class arm_instruction {
@@ -11,7 +11,7 @@ class arm_instruction {
   std::vector<bit> bits;
 
  public:
-  arm_instruction(word32& word);
+  arm_instruction(word16& word);
   
   std::string raw_bits_to_string();
 };
