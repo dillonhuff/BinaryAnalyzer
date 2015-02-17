@@ -1,25 +1,20 @@
 CC         := g++
 LINKER     := $(CC)
-CFLAGS	   := -O3 -g -Wall -std=c++0x -Isrc/
+CFLAGS	   := -O3 -g -Wall -std=c++11 -Isrc/
 
-HEADERS :=  $(shell find src -type f -name '*.h')
 SOURCES :=  $(shell find src -type f -name '*.cpp')
-OBJS := $(patsubst src/%.cpp, obj/%.o, $(SOURCES))
+OBJS := $(patsubst %.cpp, %.o, $(SOURCES))
 
-all: binary_analyzer
+binary_analyzer: $(notdir $(OBJS))
+	$(LINKER) $(CFLAGS) $(notdir $(OBJS)) -o $@
 
+include $(OBJS:.o=.d)
 
-obj/%.o: src/%.cpp $(HEADERS)
-	@mkdir -p obj
-	@mkdir -p obj/arm
-	@mkdir -p obj/elfio
-	@mkdir -p obj/utils
-	$(CC) $(CFLAGS) -c $< -o $@
-
-binary_analyzer: $(OBJS) $(HEADERS)
-	$(LINKER) $(CFLAGS) $(OBJS) -o $@
+%.d: %.cpp
+	bash depends.sh $(CFLAGS) src/ $*.cpp > $@
 
 clean:
-	rm -rf obj
-	rm -rf src/*~
+	find . -type f -name '*~' -delete
+	find . -type f -name '*.d' -delete
+	find . -type f -name '*.o' -delete
 	rm -f binary_analyzer
