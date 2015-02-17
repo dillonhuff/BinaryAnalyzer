@@ -5,7 +5,7 @@ void arm_instruction_sequence::add_instruction(word32& word) {
   instructions.push_back(std::unique_ptr<arm_instruction>(new_instr));
 }
 
-std::string arm_instruction_sequence::to_string() {
+std::string arm_instruction_sequence::raw_bits_to_string() {
   std::string instruction_string = "";
   for (auto& instr : instructions) {
     instruction_string += instr->bits_to_string() + "\n";

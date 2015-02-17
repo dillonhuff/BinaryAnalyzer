@@ -14,7 +14,7 @@ class arm_instruction_sequence {
 
  public:
   void add_instruction(word32& word);
-  std::string to_string();
+  std::string raw_bits_to_string();
 };
 
 #endif
