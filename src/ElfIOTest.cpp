@@ -1,7 +1,15 @@
 #include <iostream>
+#include <memory>
+
+#include "arm/arm_instruction_sequence.h"
+#include "arm/arm_disassembler.h"
 #include "elfio/elfio.hpp"
 
 using namespace ELFIO;
+
+void disassemble_code(char* elf_file_name);
+void read_elf(char* elf_file_name);
+void write_elf();
 
 void print_symbols(elfio* reader, section* symtab_sec) {
   const symbol_section_accessor symbols(*reader, symtab_sec);
@@ -28,13 +36,45 @@ void print_symtabs(elfio* reader) {
 }
 
 int main(int argc, char** argv) {
-  if (argc != 2) {
+
+  if (argc == 2) {
+    disassemble_code(argv[1]);
+  } else if (argc == 1) {
+    write_elf();
+  } else {
     std::cout << "Usage: tutorial <elf_file>" << std::endl;
+    std::cout << "Or   : tutorial" << std::endl;
+  }
+  return 0;
+}
+
+void disassemble_code(char* elf_file_name) {
+  elfio reader;
+
+  if (!reader.load(elf_file_name)) {
+    std::cout << "Can't find or process the ELF file " << elf_file_name << std::endl;
   }
 
+  section* text_section = NULL;  
+  for (auto sec : reader.sections) {
+    if (sec->get_name() == ".text") {
+      text_section = sec;
+    }
+  }
+  
+  if (text_section == NULL) {
+    std::cout << elf_file_name << " has no .text section" << std::endl;
+    return;
+  }
+
+  auto instructions = arm_disassembler::disassemble32(LITTLE, text_section->get_data());
+}
+
+void read_elf(char* elf_file_name) {
+
   elfio reader;
-  if (!reader.load(argv[1])) {
-    std::cout << "Can't find or process the ELF file " << argv[1] << std::endl;
+  if (!reader.load(elf_file_name)) {
+    std::cout << "Can't find or process the ELF file " << elf_file_name << std::endl;
   }
 
   std::cout << "ELF file class: ";
@@ -68,9 +108,28 @@ int main(int argc, char** argv) {
     const segment* pseg = reader.segments[i];
     std::cout << " [" << i << "] "
 	      << pseg->get_flags()
-	      << "\t0x" << std::endl;
+	      << "\t0x"
+	      << pseg->get_virtual_address()
+	      << "\t0x"
+	      << pseg->get_file_size()
+	      << "\t0x"
+	      << pseg->get_memory_size()
+	      << std::endl;
   }
 
   print_symtabs(&reader);
-  return 0;
+}
+
+void write_elf() {
+  std::cout << "Writing elf file" << std::endl;
+
+  elfio writer;
+  
+  writer.create(ELFCLASS32, ELFDATA2LSB);
+  
+  writer.set_os_abi(ELFOSABI_LINUX);
+  writer.set_type(ET_EXEC);
+  writer.set_machine(EM_386);
+  
+  std::cout << "Done writing elf file" << std::endl;
 }
