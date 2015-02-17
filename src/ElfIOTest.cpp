@@ -68,6 +68,8 @@ void disassemble_code(char* elf_file_name) {
   }
 
   auto instructions = arm_disassembler::disassemble32(LITTLE, text_section->get_data());
+
+  std::cout << instructions.to_string() << std::endl;
 }
 
 void read_elf(char* elf_file_name) {
