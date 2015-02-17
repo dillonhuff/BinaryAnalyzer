@@ -38,6 +38,7 @@ void print_symtabs(elfio* reader) {
 int main(int argc, char** argv) {
 
   if (argc == 2) {
+    read_elf(argv[1]);
     disassemble_code(argv[1]);
   } else if (argc == 1) {
     write_elf();
@@ -67,9 +68,11 @@ void disassemble_code(char* elf_file_name) {
     return;
   }
 
+  std::cout << "text_section size: " << std::to_string(text_section->get_size()) << std::endl;
+
   auto instructions = arm_disassembler::disassemble32(LITTLE, text_section->get_data(), (unsigned int) text_section->get_size());
 
-  std::cout << instructions->to_string() << std::endl;
+  std::cout << instructions->raw_bits_to_string() << std::endl;
 }
 
 void read_elf(char* elf_file_name) {

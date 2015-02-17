@@ -42,7 +42,7 @@ std::vector<std::unique_ptr<word32>> convert_to_word32(endianness end, const cha
   assert(n % 4 == 0);
 
   std::vector<std::unique_ptr<word32>> words;
-  unsigned int num_words = n / 4;
+  unsigned int num_words = n;
   for (unsigned int i = 0; i < num_words; i += 4) {
     words.push_back(std::unique_ptr<word32>(new word32(end, &bytes[i])));
   }
