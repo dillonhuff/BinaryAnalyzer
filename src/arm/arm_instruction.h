@@ -10,9 +10,14 @@ enum instruction_width { HALFWORD, FULLWORD };
 
 class arm_instruction {
  private:
+  std::string mnemonic;
   instruction_width width;
   std::vector<bit> bits;
   std::vector<char> bytes;
+
+  void parse_16_bit_instruction(word16* w);
+  void parse_shift16_class_instruction(word16* w);
+  void parse_special16_class_instruction(word16* w);
 
  public:
   arm_instruction(word16& word);
