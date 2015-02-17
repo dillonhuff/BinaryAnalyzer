@@ -20,6 +20,6 @@ binary_analyzer: $(OBJS) $(HEADERS)
 	$(LINKER) $(CFLAGS) $(OBJS) -o $@
 
 clean:
-	rm -f obj/*.o obj/linearization/*.o obj/DLA/*.o obj/tensors/*.o obj/LLDLA/*.o
-	rm -f src/*~ obj/linearization/* src/DLA/*~ src/tensors/*~ src/LLDLA/*~
-	rm -f *.x *~
+	rm -rf obj
+	rm -rf src/*~
+	rm -f binary_analyzer
