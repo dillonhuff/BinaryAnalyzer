@@ -39,7 +39,7 @@ std::vector<bit> word16::get_bits(unsigned int top, unsigned int bottom) {
 std::string word16::to_hex_string() {
   assert(bytes.size() == 2);
   if (endian == LITTLE) {
-    //    return 
+    return hex_to_string(2, '0', bytes[1]) + hex_to_string(2, '0', bytes[0]);
   }
 }
 
