@@ -17,7 +17,7 @@ bit word32::get_bit(unsigned int index) {
   if (endian == LITTLE) {
     unsigned int byte_num = index / 8;
     unsigned int byte_index = index % 8;
-    unsigned int bit_val = (bytes[byte_num] >> byte_index) && 0x01;
+    unsigned int bit_val = (bytes[byte_num] >> byte_index) & 0x01;
     return bit_val == 1 ? ONE : ZERO;
   } else {
     throw;
