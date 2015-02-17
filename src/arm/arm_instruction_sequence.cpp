@@ -8,7 +8,7 @@ void arm_instruction_sequence::add_instruction(word32& word) {
 std::string arm_instruction_sequence::to_string() {
   std::string instruction_string = "";
   for (auto& instr : instructions) {
-    
+    instruction_string += instr->bits_to_string() + "\n";
   }
   return instruction_string;
 }

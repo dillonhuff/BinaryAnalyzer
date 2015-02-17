@@ -30,8 +30,10 @@ std::vector<bit> word32::get_bits(unsigned int top, unsigned int bottom) {
   assert(31 >= bottom && bottom >= 0);
 
   std::vector<bit> bits;
-  for (unsigned int i = top; i >= bottom; --i) {
+  unsigned int i = top;
+  for (int k = 0; k <= top - bottom; k++) {
     bits.push_back(get_bit(i));
+    i--;
   }
   return bits;
 }

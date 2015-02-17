@@ -12,6 +12,8 @@ class arm_instruction {
 
  public:
   arm_instruction(word32& word);
+  
+  std::string bits_to_string();
 };
 
 #endif
