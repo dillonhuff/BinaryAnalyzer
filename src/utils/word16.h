@@ -17,6 +17,8 @@ class word16 {
 
   bit get_bit(unsigned int index);
   std::vector<bit> get_bits(unsigned int top, unsigned int bottom);
+  char most_sig_byte();
+  char least_sig_byte();
 
   std::string to_hex_string();
 };

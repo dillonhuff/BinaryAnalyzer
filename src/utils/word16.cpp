@@ -37,6 +37,22 @@ std::vector<bit> word16::get_bits(unsigned int top, unsigned int bottom) {
   return bits;
 }
 
+char word16::most_sig_byte() {
+  if (endian == LITTLE) {
+    return bytes[1];
+  } else {
+    return bytes[0];
+  }
+}
+
+char word16::least_sig_byte() {
+  if (endian == LITTLE) {
+    return bytes[0];
+  } else {
+    return bytes[1];
+  }
+}
+
 std::string word16::to_hex_string() {
   assert(bytes.size() == 2);
   if (endian == LITTLE) {
