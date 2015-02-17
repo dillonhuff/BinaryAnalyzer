@@ -6,12 +6,14 @@
 #include <string>
 
 #include "arm/arm_instruction.h"
+#include "utils/word32.h"
 
 class arm_instruction_sequence {
  private:
   std::vector<std::unique_ptr<arm_instruction>> instructions;
 
  public:
+  void add_instruction(word32& word);
   std::string to_string();
 };
 

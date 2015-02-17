@@ -10,10 +10,10 @@
 class word32 {
  private:
   endianness endian;
-  char b0, b1, b2, b3;
+  std::vector<char> bytes;
 
  public:
-  word32(endianness end, const char* bytes);
+  word32(endianness end, const char* b);
   bit get_bit(unsigned int index);
   std::vector<bit> get_bits(unsigned int top, unsigned int bottom);
 };
