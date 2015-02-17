@@ -11,7 +11,7 @@ class arm_instruction {
   std::vector<bit> bits;
 
  public:
-  //  arm_instruction(word32& word);
+  arm_instruction(word32& word);
 };
 
 #endif
