@@ -18,8 +18,10 @@ class arm_instruction {
   arm_instruction(word16& word);
   arm_instruction(word16& word1, word16& word2);
   
-  unsigned int get_width();
+  unsigned int get_byte_width();
   std::string raw_bits_to_string();
+  std::string hex_string();
+  std::string assembly_string();
 };
 
 #endif

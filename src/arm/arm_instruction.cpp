@@ -1,4 +1,5 @@
 #include "arm/arm_instruction.h"
+#include "utils/hex_print.h"
 
 arm_instruction::arm_instruction(word16& word) {
   width = HALFWORD;
@@ -21,8 +22,8 @@ arm_instruction::arm_instruction(word16& word1, word16& word2) {
   bytes.push_back(word2.least_sig_byte());
 }
 
-unsigned int arm_instruction::get_width() {
-  return width == HALFWORD ? 16 : 32;
+unsigned int arm_instruction::get_byte_width() {
+  return width == HALFWORD ? 2 : 4;
 }
 
 std::string arm_instruction::raw_bits_to_string() {
@@ -39,4 +40,16 @@ std::string arm_instruction::raw_bits_to_string() {
     }
   }
   return bit_string;
+}
+
+std::string arm_instruction::hex_string() {
+  if (width == HALFWORD) {
+    return hex_char_to_string(2, '0', bytes[0]) + hex_char_to_string(2, '0', bytes[1]);
+  } else {
+    return hex_char_to_string(2, '0', bytes[0]) + hex_char_to_string(2, '0', bytes[1]) + hex_char_to_string(2, '0', bytes[2]) + hex_char_to_string(2, '0', bytes[3]);
+  }
+}
+
+std::string arm_instruction::assembly_string() {
+  return "NOT IMPLEMENTED";
 }

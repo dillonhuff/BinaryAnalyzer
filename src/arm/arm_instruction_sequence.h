@@ -14,8 +14,13 @@ class arm_instruction_sequence {
   std::vector<std::unique_ptr<arm_instruction>> instructions;
 
  public:
+  arm_instruction_sequence(unsigned int start_address);
+
   void add_instruction(word16& word);
+  void add_instruction(word16& word1, word16& word2);
+
   std::string raw_bits_to_string();
+  std::string instruction_codes_to_string();
 };
 
 #endif

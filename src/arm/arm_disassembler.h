@@ -8,8 +8,11 @@
 #include "utils/endianness.h"
 
 class arm_disassembler {
+ private:
+  static bool is_start_of_32_bit_instruction(word16& w);
+
  public:
-  static std::unique_ptr<arm_instruction_sequence> disassemble32(unsigned int start_address, endianness end, const char* bytes, unsigned int n);
+  static std::unique_ptr<arm_instruction_sequence> disassembleARM6M(unsigned int start_address, endianness end, const char* bytes, unsigned int n);
 };
 
 #endif
