@@ -1,9 +1,11 @@
+#include <iomanip>
 #include <iostream>
 #include <memory>
 
 #include "arm/arm_instruction_sequence.h"
 #include "arm/arm_disassembler.h"
 #include "elfio/elfio.hpp"
+#include "utils/hex_print.h"
 
 using namespace ELFIO;
 
@@ -68,11 +70,18 @@ void disassemble_code(char* elf_file_name) {
     return;
   }
 
-  std::cout << "text_section size: " << std::to_string(text_section->get_size()) << std::endl;
+  // Print out the text section data
+  for (int i = 0; i < text_section->get_size(); i++) {
+    std::cout << hex_to_string(2, '0', text_section->get_data()[i]);
+    std::cout << " ";
+    if (i % 8 == 7) {
+      std::cout << std::endl;
+    }
+  }
 
+  /*  std::cout << "text_section size: " << std::to_string(text_section->get_size()) << std::endl;
   auto instructions = arm_disassembler::disassemble32(LITTLE, text_section->get_data(), (unsigned int) text_section->get_size());
-
-  std::cout << instructions->raw_bits_to_string() << std::endl;
+  std::cout << instructions->raw_bits_to_string() << std::endl;*/
 }
 
 void read_elf(char* elf_file_name) {
