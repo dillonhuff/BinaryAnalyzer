@@ -36,24 +36,15 @@ std::string instr_class_32_names[3] = {"UNDEFINED", "UNDEFINED", "BRANCH_AND_MIS
 auto class_32_table =
   bit_pattern_table<std::string>(instr_class_32, instr_class_32_names, 3, 14);
 
+arm_instruction* arm_disassembler::decode_arm6m_32(word16* w1, word16* w2) {
+  auto instr = new arm_instruction(w1, w2);
+  return instr;
+}
+
 arm_instruction* arm_disassembler::decode_arm6m_16(word16* w) {
   auto instr = new arm_instruction(w);
   return instr;
 }
-
-void arm_disassembler::decode_arm6m_class_32(arm_instruction* instr, word16* w1, word16* w2) {
-  auto w1_bits = w1->get_bits(12, 0);
-  auto w2_bits = w2->get_bits(15, 15);
-  w1_bits.insert(w1_bits.end(), w2_bits.begin(), w2_bits.end());
-  instr->set_class(class_32_table.match(w1_bits));
-}
-
-arm_instruction* arm_disassembler::decode_arm6m_32(word16* w1, word16* w2) {
-  auto instr = new arm_instruction(w1, w2);
-  decode_arm6m_class_32(instr, w1, w2);
-  return instr;
-}
-
 
 std::unique_ptr<arm_instruction_sequence> arm_disassembler::disassembleARM6M(unsigned int start_addr, endianness end, const char* bytes, unsigned int n) {
   std::cout << "DEBUG: n = " << std::to_string(n) << std::endl;
