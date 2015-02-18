@@ -2,49 +2,29 @@
 #include "arm/arm_disassembler.h"
 #include "utils/hex_print.h"
 
-void arm_instruction::parse_shift16_class_instruction(word16* w) {
-  if (arm_disassembler::is_16_bit_add(w)) {
-    mnemonic = "ADD";
-  }
-}
-
-void arm_instruction::parse_special16_class_instruction(word16* w) {
-  if (arm_disassembler::is_special_add16(w)) {
-    mnemonic = "ADD";
-  }
-}
-
-void arm_instruction::parse_16_bit_instruction(word16* w) {
-  if (arm_disassembler::is_16_bit_shift_class(w)) {
-    parse_shift16_class_instruction(w);
-  } else if (arm_disassembler::is_16_bit_special_class(w)) {
-    parse_special16_class_instruction(w);
-  }
-}
-
-arm_instruction::arm_instruction(word16& word) {
+arm_instruction::arm_instruction(word16* word) {
   mnemonic = "UNRECOGNIZED";
+  instr_class = "";
   width = HALFWORD;
-  bits = word.get_bits(15, 0);
-  bytes.push_back(word.most_sig_byte());
-  bytes.push_back(word.least_sig_byte());
-  
-  parse_16_bit_instruction(&word);
+  bits = word->get_bits(15, 0);
+  bytes.push_back(word->most_sig_byte());
+  bytes.push_back(word->least_sig_byte());
 }
 
-arm_instruction::arm_instruction(word16& word1, word16& word2) {
+arm_instruction::arm_instruction(word16* word1, word16* word2) {
   mnemonic = "UNRECOGNIZED";
+  instr_class = "";
   width = FULLWORD;
-  bits = word1.get_bits(15, 0);
+  bits = word1->get_bits(15, 0);
   int i = 15;
   for (int j = 0; j < 15; j++) {
-    bits.push_back(word2.get_bit(i));
+    bits.push_back(word2->get_bit(i));
   }
 
-  bytes.push_back(word1.most_sig_byte());
-  bytes.push_back(word1.least_sig_byte());
-  bytes.push_back(word2.most_sig_byte());
-  bytes.push_back(word2.least_sig_byte());
+  bytes.push_back(word1->most_sig_byte());
+  bytes.push_back(word1->least_sig_byte());
+  bytes.push_back(word2->most_sig_byte());
+  bytes.push_back(word2->least_sig_byte());
 }
 
 unsigned int arm_instruction::get_byte_width() {
@@ -76,5 +56,9 @@ std::string arm_instruction::hex_string() {
 }
 
 std::string arm_instruction::assembly_string() {
-  return mnemonic;
+  return mnemonic + " " + instr_class;
+}
+
+void arm_instruction::set_class(std::string new_class) {
+  instr_class = new_class;
 }

@@ -2,6 +2,7 @@
 
 #include "arm/arm_disassembler.h"
 #include "elfio/elfio.hpp"
+#include "utils/bit_pattern_table.hpp"
 #include "utils/hex_print.h"
 
 using namespace ELFIO;

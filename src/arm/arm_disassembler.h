@@ -10,6 +10,9 @@
 class arm_disassembler {
  private:
   static bool is_start_of_32_bit_instruction(word16& w);
+  static arm_instruction* decode_arm6m_16(word16* w);
+  static arm_instruction* decode_arm6m_32(word16* w1, word16* w2);
+  static void decode_arm6m_class_32(arm_instruction* instr, word16* w1, word16* w2);
 
  public:
   static bool is_16_bit_shift_class(word16* w);

@@ -30,7 +30,7 @@ std::vector<bit> word16::get_bits(unsigned int top, unsigned int bottom) {
 
   std::vector<bit> bits;
   unsigned int i = top;
-  for (int k = 0; k <= top - bottom; k++) {
+  for (unsigned int k = 0; k <= top - bottom; k++) {
     bits.push_back(get_bit(i));
     i--;
   }

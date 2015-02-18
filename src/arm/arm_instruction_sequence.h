@@ -16,8 +16,7 @@ class arm_instruction_sequence {
  public:
   arm_instruction_sequence(unsigned int start_address);
 
-  void add_instruction(word16& word);
-  void add_instruction(word16& word1, word16& word2);
+  void add_instruction(arm_instruction* new_instr);
 
   std::string raw_bits_to_string();
   std::string instruction_codes_to_string();
