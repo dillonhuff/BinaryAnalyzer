@@ -4,6 +4,7 @@
 #include <vector>
 
 #include "bit.h"
+#include "bit_field.h"
 
 enum bit_p { one, zero, any };
 
@@ -13,7 +14,7 @@ class bit_pattern {
 
  public:
   bit_pattern(bit_p* pat, int n);
-  bool matches(std::vector<bit> bits);
+  bool matches(bit_field bits);
 };
 
 #endif

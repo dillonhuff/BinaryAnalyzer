@@ -8,7 +8,7 @@ bit_pattern::bit_pattern(bit_p* pat, int n) {
   }
 }
 
-bool bit_pattern::matches(std::vector<bit> bits) {
+bool bit_pattern::matches(bit_field bits) {
   if (bits.size() != pattern.size()) {
     std::cout << "Trying to match uneven size patterns" << std::endl;
     throw;
@@ -17,12 +17,6 @@ bool bit_pattern::matches(std::vector<bit> bits) {
     if ((pattern[i] != any) &&
 	((bits[i] == ONE && pattern[i] == zero) ||
 	 (bits[i] == ZERO && pattern[i] == one))) {
-      std::cout << "Bit match failed at " << i << std::endl;
-      std::cout << "Bit vector:" << std::endl;
-      for (auto b : bits) {
-	std::cout << b;
-      }
-      std::cout << std::endl;
       return false;
     }
   }

@@ -20,7 +20,7 @@ class bit_pattern_table {
     }
   }
 
-  T match(std::vector<bit> bits) {
+  T match(bit_field bits) {
     for (auto p : patterns) {
       if (p.first.matches(bits)) {
 	return p.second;

@@ -27,6 +27,7 @@ class arm_instruction {
   std::string assembly_string();
 
   void set_class(std::string new_class);
+  void set_mnemonic(std::string new_mnemonic);
 };
 
 #endif

@@ -62,3 +62,7 @@ std::string arm_instruction::assembly_string() {
 void arm_instruction::set_class(std::string new_class) {
   instr_class = new_class;
 }
+
+void arm_instruction::set_mnemonic(std::string new_mnemonic) {
+  mnemonic = new_mnemonic;
+}
