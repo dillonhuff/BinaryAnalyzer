@@ -17,6 +17,8 @@ bool bit_pattern::matches(bit_field bits) {
     if ((pattern[i] != any) &&
 	((bits[i] == ONE && pattern[i] == zero) ||
 	 (bits[i] == ZERO && pattern[i] == one))) {
+      std::cout << "Match failed, bits: " << std::endl;
+      std::cout << bits.to_string() << std::endl;
       return false;
     }
   }

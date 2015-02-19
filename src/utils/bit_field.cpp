@@ -21,3 +21,15 @@ bit_field bit_field::subfield(unsigned int top, unsigned int bottom) {
   }
   return bit_field(bs);
 }
+
+std::string bit_field::to_string() {
+  std::string result = "";
+  for (unsigned int i = 0; i < bits.size(); i++) {
+    if (bits[i] == ONE) {
+      result += "1";
+    } else {
+      result += "0";
+    }
+  }
+  return result;
+}

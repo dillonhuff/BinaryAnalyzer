@@ -6,7 +6,7 @@
 
 class decoder {
  public:
-  virtual unsigned int decode(arm_instruction* instr, bit_field* bits) = 0;
+  virtual unsigned int decode(arm_instruction* instr, bit_field* bits);
 };
 
 #endif
