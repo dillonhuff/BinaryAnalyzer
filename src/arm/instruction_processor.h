@@ -8,4 +8,5 @@ class instruction_processor {
  public:
   virtual void process(arm_instruction* instr, bit_field* bits);
 };
+
 #endif
