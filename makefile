@@ -20,6 +20,7 @@ all_tests: $(notdir $(OBJS))
 	$(LINKER) $(CFLAGS) $(notdir $(OBJS)) -o $@
 
 include $(OBJS:.o=.d)
+include $(HEADERS:.h=.d)
 
 %.d: %.cpp
 	bash depends.sh $(DEP_CFLAGS) ./ $*.cpp > $@
