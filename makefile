@@ -13,19 +13,19 @@ endif
 
 LINKER := $(CC)
 
-SOURCES :=  $(shell find src -type f -name '*.cpp')
+SOURCES :=  $(shell find ./ -type f -name '*.cpp')
 OBJS := $(patsubst %.cpp, %.o, $(SOURCES))
 
-binary_analyzer: $(notdir $(OBJS))
+all_tests: $(notdir $(OBJS))
 	$(LINKER) $(CFLAGS) $(notdir $(OBJS)) -o $@
 
 include $(OBJS:.o=.d)
 
 %.d: %.cpp
-	bash depends.sh $(DEP_CFLAGS) src/ $*.cpp > $@
+	bash depends.sh $(DEP_CFLAGS) ./ $*.cpp > $@
 
 clean:
 	find . -type f -name '*~' -delete
 	find . -type f -name '*.d' -delete
 	find . -type f -name '*.o' -delete
-	rm -f binary_analyzer
+	rm -f all_tests
