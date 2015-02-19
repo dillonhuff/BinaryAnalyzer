@@ -3,4 +3,6 @@
 
 enum endianness { BIG, LITTLE };
 
+#define SYSTEM_ENDIANNESS LITTLE
+
 #endif

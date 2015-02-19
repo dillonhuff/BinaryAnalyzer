@@ -5,7 +5,7 @@
 #include "utils/hex_print.h"
 #include "utils/word16.h"
 
-word16::word16(endianness end, const char* b) {
+word16::word16(endianness end, const unsigned char* b) {
   endian = end;
   bytes.push_back(b[0]);
   bytes.push_back(b[1]);
@@ -37,7 +37,7 @@ std::vector<bit> word16::get_bits(unsigned int top, unsigned int bottom) {
   return bits;
 }
 
-char word16::most_sig_byte() {
+unsigned char word16::most_sig_byte() {
   if (endian == LITTLE) {
     return bytes[1];
   } else {
@@ -45,7 +45,7 @@ char word16::most_sig_byte() {
   }
 }
 
-char word16::least_sig_byte() {
+unsigned char word16::least_sig_byte() {
   if (endian == LITTLE) {
     return bytes[0];
   } else {
@@ -62,7 +62,7 @@ std::string word16::to_hex_string() {
   }
 }
 
-std::vector<std::unique_ptr<word16>> convert_to_word16(endianness end, const char* bytes, unsigned int n) {
+std::vector<std::unique_ptr<word16>> convert_to_word16(endianness end, const unsigned char* bytes, unsigned int n) {
   assert(n % 2 == 0);
 
   std::vector<std::unique_ptr<word16>> words;

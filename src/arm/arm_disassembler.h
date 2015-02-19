@@ -21,7 +21,7 @@ class arm_disassembler {
   static bool is_16_bit_add(word16* w);
   static bool is_special_add16(word16* w);
 
-  static std::unique_ptr<arm_instruction_sequence> disassembleARM6M(unsigned int start_address, endianness end, const char* bytes, unsigned int n);
+  static std::unique_ptr<arm_instruction_sequence> disassembleARM6M(unsigned int start_address, endianness end, const unsigned char* bytes, unsigned int n);
 };
 
 #endif

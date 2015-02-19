@@ -37,17 +37,19 @@ arm_instruction* arm_disassembler::decode_arm6m_16(word16* w) {
   return instr;
 }
 
-std::unique_ptr<arm_instruction_sequence> arm_disassembler::disassembleARM6M(unsigned int start_addr, endianness end, const char* bytes, unsigned int n) {
+std::unique_ptr<arm_instruction_sequence> arm_disassembler::disassembleARM6M(unsigned int start_addr, endianness end, const unsigned char* bytes, unsigned int n) {
   std::cout << "DEBUG: n = " << std::to_string(n) << std::endl;
   auto word16_list = convert_to_word16(end, bytes, n);
   auto instrs = new arm_instruction_sequence(start_addr);
   unsigned int i = 0;
   while (i < word16_list.size()) {
     if (is_start_of_32_bit_instruction(*(word16_list[i]))) {
+      std::cout << "32 bit instruction" << std::endl;
       auto instr = decode_arm6m_32(word16_list[i].get(), word16_list[i+1].get());
       instrs->add_instruction(instr);
       i += 2;
     } else {
+      std::cout << "16 bit instruction" << std::endl;
       auto instr = decode_arm6m_16(word16_list[i].get());
       instrs->add_instruction(instr);
       i += 1;
